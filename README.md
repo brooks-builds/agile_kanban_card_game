@@ -64,7 +64,19 @@ Set up some rules for the game. The team gets to choose what options to set. The
 
 ## Stories
 
-- [ ] As a player, I want to launch the game
-  - [ ] Frontend
+- [x] As a player, I want to launch the game
+  - [x] Frontend
     - [x] Hello world set up
     - [x] Splash screen loads with game title
+- [ ] As a coordinator, I want to host a game
+  - [ ] Frontend
+    - [x] Form field to enter name
+    - [x] Button/link to host a game
+    - [ ] When button is clicked the frontend sends an event to start the game
+    - [ ] After hosting the game, Can see a lobby
+  - [ ] Backend
+    - [ ] Hello world api set up
+    - [ ] Database configured
+    - [ ] route for creating a game
+    - [ ] Generate game code and put into database
+    - [ ] Return game code to frontend

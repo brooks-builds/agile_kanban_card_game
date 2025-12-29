@@ -55,6 +55,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "anathema-extras"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d666bf7052613bef9b695bbbac168b615c614cedb616d4ce3f97de4a6cc5eb17"
+dependencies = [
+ "anathema",
+ "unicode-width",
+]
+
+[[package]]
 name = "anathema-geometry"
 version = "0.2.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -149,6 +159,7 @@ name = "anathema_frontend"
 version = "0.1.0"
 dependencies = [
  "anathema",
+ "anathema-extras",
 ]
 
 [[package]]

@@ -1,6 +1,16 @@
+mod components;
 mod pages;
 
-use crate::pages::home::Home;
+use crate::{
+    components::{
+        button::{Button, ButtonState},
+        input::{Input, InputState},
+    },
+    pages::{
+        home::Home,
+        splash::{Splash, SplashState},
+    },
+};
 use anathema::{
     prelude::{Backend, Document, TuiBackend},
     runtime::{Error, Runtime},
@@ -20,7 +30,18 @@ pub fn run() -> Result<(), Error> {
 
     let mut builder = Runtime::builder(document, &backend);
 
+    builder.default::<anathema_extras::Input>("ae_input", anathema_extras::Input::template())?;
+
+    builder.prototype("input", "templates/input.aml", || Input, InputState::new)?;
+    builder.prototype(
+        "button",
+        "templates/button.aml",
+        || Button,
+        ButtonState::new,
+    )?;
+
     builder.component("home", "templates/home.aml", Home, ())?;
+    builder.component("splash", "templates/splash.aml", Splash, SplashState::new())?;
 
     builder.finish(&mut backend, |runtime, backend| runtime.run(backend))
 }

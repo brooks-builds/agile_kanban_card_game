@@ -1,0 +1,7 @@
+vstack
+	vstack [foreground: state.foreground_color]
+		text attributes.label
+		border
+			@ae_input (on_enter->on_enter)
+				text [foreground: "dark_grey"] "Name"
+	text state.value

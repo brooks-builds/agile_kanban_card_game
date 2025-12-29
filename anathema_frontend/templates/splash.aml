@@ -1,0 +1,20 @@
+vstack
+	padding [top: 5]
+		hstack
+			spacer
+			text "Agile KanBan Card Game"
+			spacer
+	if !state.player_name
+		padding [top: 1]
+			@input (on_enter->set_player_name) [label: "What is your name (Hit enter after typing)"]
+	else
+		padding [padding: 1]
+			hstack
+				spacer
+				text "Welcome "
+				text state.player_name
+				spacer
+		hstack
+			spacer
+			@button [label: "Create Game"]
+			spacer
