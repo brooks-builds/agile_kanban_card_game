@@ -66,5 +66,5 @@ Set up some rules for the game. The team gets to choose what options to set. The
 
 - [ ] As a player, I want to launch the game
   - [ ] Frontend
-    - [ ] Hello world set up
-    - [ ] Splash screen loads with game title
+    - [x] Hello world set up
+    - [x] Splash screen loads with game title
