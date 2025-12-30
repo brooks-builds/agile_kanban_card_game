@@ -1,1 +1,6 @@
-@splash
+if state.game_id == 0
+	vstack
+		@splash (create_game->create_game)
+		text state.player_name
+else
+	@lobby

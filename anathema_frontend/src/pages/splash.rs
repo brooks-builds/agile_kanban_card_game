@@ -23,6 +23,12 @@ impl Component for Splash {
 
                 state.player_name.set(player_name.to_owned());
             }
+            "create_game" => {
+                let player_name = state.player_name.to_ref().to_owned();
+
+                context.publish("create_game", player_name.to_owned());
+                event.stop_propagation();
+            }
             _ => (),
         }
     }

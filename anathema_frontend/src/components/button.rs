@@ -15,7 +15,7 @@ impl Component for Button {
         mouse: anathema::component::MouseEvent,
         state: &mut Self::State,
         mut children: anathema::component::Children<'_, '_>,
-        mut _context: anathema::component::Context<'_, '_, Self::State>,
+        mut context: anathema::component::Context<'_, '_, Self::State>,
     ) {
         if mouse.left_down() {
             children.elements().at_position(mouse.pos()).first(|_, _| {
@@ -30,6 +30,7 @@ impl Component for Button {
                 let mut background_color = state.background_color.to_mut();
 
                 *background_color = "#00aa00".to_owned();
+                context.publish("on_click", ());
             });
         }
     }

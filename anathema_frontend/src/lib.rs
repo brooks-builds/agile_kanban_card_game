@@ -1,3 +1,4 @@
+pub mod api;
 mod components;
 mod pages;
 
@@ -7,7 +8,8 @@ use crate::{
         input::{Input, InputState},
     },
     pages::{
-        home::Home,
+        home::{Home, HomeState},
+        lobby::Lobby,
         splash::{Splash, SplashState},
     },
 };
@@ -40,8 +42,9 @@ pub fn run() -> Result<(), Error> {
         ButtonState::new,
     )?;
 
-    builder.component("home", "templates/home.aml", Home, ())?;
+    builder.component("home", "templates/home.aml", Home, HomeState::new())?;
     builder.component("splash", "templates/splash.aml", Splash, SplashState::new())?;
+    builder.component("lobby", "templates/lobby.aml", Lobby, ())?;
 
     builder.finish(&mut backend, |runtime, backend| runtime.run(backend))
 }

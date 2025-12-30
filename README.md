@@ -72,7 +72,7 @@ Set up some rules for the game. The team gets to choose what options to set. The
   - [ ] Frontend
     - [x] Form field to enter name
     - [x] Button/link to host a game
-    - [ ] When button is clicked the frontend sends an event to start the game
+    - [x] When button is clicked the frontend sends an event to start the game
     - [ ] After hosting the game, Can see a lobby
   - [ ] Backend
     - [ ] Hello world api set up
