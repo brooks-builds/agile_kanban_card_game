@@ -1,5 +1,9 @@
-if state.game_code == ""
-	vstack
-		@splash (create_game->create_game)
-else
-	@lobby [game_code: state.game_code, player_name: state.player_name]
+vstack
+	@nav (nav_to->nav_to) [game_code: state.game_code, screen: state.screen]
+	if state.screen == "splash"
+		vstack
+			@splash (create_game->create_game)
+	else if state.screen == "lobby"
+		@lobby [game_code: state.game_code, player_name: state.player_name]
+	else if state.screen == "config"
+		@config [api_url: state.api_url]

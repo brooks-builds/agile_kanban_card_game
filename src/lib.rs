@@ -6,8 +6,10 @@ use crate::{
     components::{
         button::{Button, ButtonState},
         input::{Input, InputState},
+        nav::Nav,
     },
     pages::{
+        config::{Config, ConfigState},
         home::{Home, HomeState},
         lobby::Lobby,
         splash::{Splash, SplashState},
@@ -41,10 +43,12 @@ pub fn run() -> Result<(), Error> {
         || Button,
         ButtonState::new,
     )?;
+    builder.prototype("nav", "templates/nav.aml", || Nav, || ())?;
 
     builder.component("home", "templates/home.aml", Home, HomeState::new())?;
     builder.component("splash", "templates/splash.aml", Splash, SplashState::new())?;
     builder.component("lobby", "templates/lobby.aml", Lobby, ())?;
+    builder.component("config", "templates/config.aml", Config, ConfigState::new())?;
 
     builder.finish(&mut backend, |runtime, backend| runtime.run(backend))
 }

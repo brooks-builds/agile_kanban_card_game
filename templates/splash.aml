@@ -6,7 +6,7 @@ vstack
 			spacer
 	if !state.player_name
 		padding [top: 1]
-			@input (on_enter->set_player_name) [label: "What is your name (Hit enter after typing)"]
+			@input (on_enter->set_player_name) [label: "What is your name (Hit enter after typing)", placeholder: "Name"]
 	else
 		padding [padding: 1]
 			hstack

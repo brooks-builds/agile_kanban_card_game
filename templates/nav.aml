@@ -1,0 +1,10 @@
+border [sides: "bottom"]
+	hstack
+		text "Agile KanBan Card Game"
+		spacer
+		if attributes.game_code != 0
+			hstack
+				text "Game Code: "
+				text attributes.game_code
+		text " "
+		@button (on_click->open_config) [label: "config", size: "small"]

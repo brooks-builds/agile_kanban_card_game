@@ -1,0 +1,13 @@
+vstack
+	hstack
+		spacer
+		text "Config"
+		spacer
+	hstack
+		if state.changing_api_url
+			@input [label: "API URL", placeholder: "API URL"]
+		else
+			text "API URL: "
+			text attributes.api_url
+			text " "
+			@button (on_click->changing_api_url) [size: "small", label: "change"]

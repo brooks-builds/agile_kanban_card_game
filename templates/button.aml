@@ -1,2 +1,6 @@
-padding [padding: 1, background: state.background_color]
-	text attributes.label
+if attributes.size == "small" 
+	padding [left: 1, right: 1, background: state.background_color]
+		text attributes.label
+else
+	padding [padding: 1, background: state.background_color]
+		text attributes.label

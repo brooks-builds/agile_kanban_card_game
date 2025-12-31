@@ -82,11 +82,13 @@ Set up some rules for the game. The team gets to choose what options to set. The
     - [x] Return game code to frontend
 - [x] Break backend out into it's own repo
 - [ ] As a player I want to change the server I'm using
-  - [ ] button to open config page
-  - [ ] Config page
-  - [ ] form to set server address
+  - [x] button to open config page
+  - [x] Config page
+  - [x] form to set server address
   - [ ] On enter server address is updated
   - [ ] button to close config page
   - [ ] Player returns to where they were before opening config
+  - [ ] Can cancel changing API URL on config page
 - [ ] As a player, I want to see what went wrong when there is an error
 - [ ] As a player, I want to easily copy the game code
+- [ ] As a player, I would like to quit the game
