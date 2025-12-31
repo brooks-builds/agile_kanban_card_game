@@ -80,7 +80,7 @@ Set up some rules for the game. The team gets to choose what options to set. The
     - [x] route for creating a game
     - [x] Generate game code and put into database
     - [x] Return game code to frontend
-- [ ] Break backend out into it's own repo
+- [x] Break backend out into it's own repo
 - [ ] As a player I want to change the server I'm using
   - [ ] button to open config page
   - [ ] Config page
