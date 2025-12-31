@@ -1,6 +1,6 @@
-if state.game_id == 0
+if state.game_id == ""
 	vstack
 		@splash (create_game->create_game)
 		text state.player_name
 else
-	@lobby
+	@lobby [game_code: state.game_code, player_name: state.player_name]

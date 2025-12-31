@@ -68,15 +68,25 @@ Set up some rules for the game. The team gets to choose what options to set. The
   - [x] Frontend
     - [x] Hello world set up
     - [x] Splash screen loads with game title
-- [ ] As a coordinator, I want to host a game
-  - [ ] Frontend
+- [x] As a coordinator, I want to host a game
+  - [x] Frontend
     - [x] Form field to enter name
     - [x] Button/link to host a game
     - [x] When button is clicked the frontend sends an event to start the game
     - [x] After starting the game, Can see a lobby
-  - [ ] Backend
-    - [x] Hello world api set up
-    - [ ] Database configured
-    - [ ] route for creating a game
-    - [ ] Generate game code and put into database
-    - [ ] Return game code to frontend
+  - [x] Backend
+    - [x] Hello world API set up
+    - [x] Database configured
+    - [x] route for creating a game
+    - [x] Generate game code and put into database
+    - [x] Return game code to frontend
+- [ ] Break backend out into it's own repo
+- [ ] As a player I want to change the server I'm using
+  - [ ] button to open config page
+  - [ ] Config page
+  - [ ] form to set server address
+  - [ ] On enter server address is updated
+  - [ ] button to close config page
+  - [ ] Player returns to where they were before opening config
+- [ ] As a player, I want to see what went wrong when there is an error
+- [ ] As a player, I want to easily copy the game code

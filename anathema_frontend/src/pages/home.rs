@@ -1,12 +1,8 @@
-use std::thread::spawn;
-
+use crate::api::{self, CreateGameResponse};
 use anathema::{
     component::Component,
     state::{State, Value},
 };
-use serde_json::json;
-
-use crate::api::{self, CreateGameResponse};
 
 pub struct Home;
 
@@ -23,8 +19,8 @@ impl Component for Home {
         &mut self,
         event: &mut anathema::component::UserEvent<'_>,
         state: &mut Self::State,
-        mut children: anathema::component::Children<'_, '_>,
-        mut context: anathema::component::Context<'_, '_, Self::State>,
+        mut _children: anathema::component::Children<'_, '_>,
+        context: anathema::component::Context<'_, '_, Self::State>,
     ) {
         match event.name() {
             "create_game" => {
@@ -45,29 +41,34 @@ impl Component for Home {
         &mut self,
         message: Self::Message,
         state: &mut Self::State,
-        mut children: anathema::component::Children<'_, '_>,
-        mut context: anathema::component::Context<'_, '_, Self::State>,
+        mut _children: anathema::component::Children<'_, '_>,
+        mut _context: anathema::component::Context<'_, '_, Self::State>,
     ) {
         let game_id = message.game_id;
+        let game_code = message.code;
 
         state.game_id.set(game_id);
+        state.game_code.set(game_code);
     }
 }
 
 #[derive(Debug, State)]
 pub struct HomeState {
     player_name: Value<String>,
-    game_id: Value<usize>,
+    game_id: Value<String>,
+    game_code: Value<i32>,
 }
 
 impl HomeState {
     pub fn new() -> Self {
         let player_name = Value::new(String::new());
-        let game_id = Value::new(0);
+        let game_id = Value::new(String::new());
+        let game_code = Value::new(0);
 
         Self {
             player_name,
             game_id,
+            game_code,
         }
     }
 }

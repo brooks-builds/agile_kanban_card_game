@@ -4,7 +4,7 @@ services:
     ports:
       - 3000:3000
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/api/healthcheck"]
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/api/healthcheck"]
       interval: 30s
       start_interval: 10s
       start_period: 10s
@@ -18,3 +18,25 @@ services:
           action: rebuild
     volumes:
       - ./backend:/code
+    restart: always
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://postgres:keyboard_cat@database:5432/postgres
+  database:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: keyboard_cat
+    volumes:
+      - ./backend/db_init:/docker-entrypoint-initdb.d
+    healthcheck:
+      interval: 1m
+      retries: 10
+      start_interval: 1s
+      start_period: 5s
+      test: ["CMD-SHELL", "psql -U postgres -c 'select * from agile_game;'"]
+      timeout: 30s
+    ports:
+      - 5432:5432

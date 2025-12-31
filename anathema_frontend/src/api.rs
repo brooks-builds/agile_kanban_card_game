@@ -1,14 +1,6 @@
-use anathema::{
-    component::{ComponentId, Emitter},
-    store::slab::Key,
-    widgets::components::deferred::QueryBuilder,
-};
+use anathema::{component::Emitter, store::slab::Key};
 use serde::{Deserialize, Serialize};
-use std::{
-    collections::hash_map::IntoKeys,
-    sync::mpsc::{channel, sync_channel},
-    thread,
-};
+use std::thread;
 
 const BASE_URL: &str = "http://backend:3000/api";
 
@@ -24,8 +16,7 @@ pub fn create_game(player_name: String, emitter: Emitter, send_to: Key) {
             .json::<CreateGameResponse>()
             .unwrap();
 
-        println!("Game has been created: {response:?}");
-        emitter.try_emit(send_to, response);
+        emitter.try_emit(send_to, response).unwrap();
     });
 }
 
@@ -37,5 +28,6 @@ pub struct CreateGameData {
 #[derive(Debug, Deserialize)]
 pub struct CreateGameResponse {
     pub player_name: String,
-    pub game_id: usize,
+    pub game_id: String,
+    pub code: i32,
 }

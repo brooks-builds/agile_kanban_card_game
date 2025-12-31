@@ -1,9 +1,6 @@
 use std::ops::Deref;
 
-use anathema::{
-    component::Component,
-    state::{State, Value},
-};
+use anathema::{component::Component, state::State};
 
 pub struct Input;
 
@@ -37,8 +34,8 @@ impl Component for Input {
     fn on_event(
         &mut self,
         event: &mut anathema::component::UserEvent<'_>,
-        state: &mut Self::State,
-        mut children: anathema::component::Children<'_, '_>,
+        _state: &mut Self::State,
+        mut _children: anathema::component::Children<'_, '_>,
         mut context: anathema::component::Context<'_, '_, Self::State>,
     ) {
         match event.name() {

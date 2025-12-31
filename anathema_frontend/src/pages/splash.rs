@@ -14,7 +14,7 @@ impl Component for Splash {
         &mut self,
         event: &mut anathema::component::UserEvent<'_>,
         state: &mut Self::State,
-        mut children: anathema::component::Children<'_, '_>,
+        mut _children: anathema::component::Children<'_, '_>,
         mut context: anathema::component::Context<'_, '_, Self::State>,
     ) {
         match event.name() {

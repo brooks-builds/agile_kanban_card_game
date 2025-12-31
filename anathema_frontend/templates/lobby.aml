@@ -1,1 +1,11 @@
-text "Lobby"
+vstack
+	border [sides: "bottom"]
+		hstack
+			text "Agile KanBan Card Game Lobby"
+			spacer
+			text "Game Code: "
+			text attributes.game_code
+	text "Players:"
+	padding [left: 4]
+		vstack
+			text attributes.player_name
