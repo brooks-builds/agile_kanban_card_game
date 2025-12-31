@@ -31,9 +31,9 @@ impl Component for Home {
                 let player_name = event.data::<String>().to_owned();
 
                 let emitter = context.emitter.clone();
-                let component_id = context.components.by_name("home");
+                let key = context.widget_id;
 
-                api::create_game(player_name.clone(), context.components.by_name("home"));
+                api::create_game(player_name.clone(), emitter, key);
 
                 state.player_name.set(player_name);
             }

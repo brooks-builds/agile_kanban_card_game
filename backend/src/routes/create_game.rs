@@ -12,6 +12,8 @@ pub async fn create_game(Json(data): Json<CreateGame>) -> (StatusCode, Json<Crea
         game_id,
     };
 
+    thread::sleep(Duration::from_secs(5));
+
     (response_code, Json(response))
 }
 

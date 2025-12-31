@@ -1,5 +1,6 @@
 use anathema::{
     component::{ComponentId, Emitter},
+    store::slab::Key,
     widgets::components::deferred::QueryBuilder,
 };
 use serde::{Deserialize, Serialize};
@@ -11,8 +12,7 @@ use std::{
 
 const BASE_URL: &str = "http://backend:3000/api";
 
-pub fn create_game(player_name: String, send_to: QueryBuilder) {
-    let (sender, receiver) = channel::<CreateGameResponse>();
+pub fn create_game(player_name: String, emitter: Emitter, send_to: Key) {
     thread::spawn(move || {
         let data = CreateGameData { player_name };
         let client = reqwest::blocking::Client::new();
@@ -25,13 +25,8 @@ pub fn create_game(player_name: String, send_to: QueryBuilder) {
             .unwrap();
 
         println!("Game has been created: {response:?}");
-
-        sender.send(response).unwrap();
+        emitter.try_emit(send_to, response);
     });
-
-    if let Ok(created_game_response) = receiver.recv() {
-        send_to.send(created_game_response);
-    }
 }
 
 #[derive(Debug, Serialize)]

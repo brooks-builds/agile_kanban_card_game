@@ -16,3 +16,5 @@ services:
           action: rebuild
         - path: ./backend/Cargo.toml
           action: rebuild
+    volumes:
+      - ./backend:/code

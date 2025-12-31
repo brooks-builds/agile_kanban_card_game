@@ -1,9 +1,6 @@
 FROM rust:latest
 
-RUN mkdir /code
-
-COPY . /code
-
+VOLUME /code
 WORKDIR /code
 EXPOSE 3000
 
