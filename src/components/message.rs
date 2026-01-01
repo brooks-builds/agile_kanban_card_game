@@ -82,7 +82,7 @@ impl MessageState {
 fn send_message_remove(id: Key, emitter: Emitter, message: MessageWrapper) {
     thread::spawn(move || {
         thread::sleep(Duration::from_secs(10));
-        emitter.try_emit(id, message).unwrap();
+        emitter.try_emit(id, message).ok();
     });
 }
 

@@ -30,7 +30,7 @@ pub fn run() -> Result<(), Error> {
         .enable_raw_mode()
         .hide_cursor()
         .finish()
-        .unwrap();
+        .expect("Unable to create the backend");
 
     backend.finalize();
 

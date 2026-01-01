@@ -1,4 +1,7 @@
-use crate::api::{self, CreateGameResponse};
+use crate::{
+    api::{self, CreateGameResponse},
+    components::message::MessageWrapper,
+};
 use anathema::{
     component::Component,
     state::{List, State, Value},
@@ -19,7 +22,7 @@ impl Component for Home {
         &mut self,
         event: &mut anathema::component::UserEvent<'_>,
         state: &mut Self::State,
-        mut _children: anathema::component::Children<'_, '_>,
+        mut children: anathema::component::Children<'_, '_>,
         mut context: anathema::component::Context<'_, '_, Self::State>,
     ) {
         match event.name() {
@@ -28,8 +31,30 @@ impl Component for Home {
                 let api_url = state.api_url.to_ref();
                 let emitter = context.emitter.clone();
                 let key = context.widget_id;
+                let message_key = match children
+                    .components()
+                    .by_name("message")
+                    .first(|key, _, _| key)
+                {
+                    Some(key) => key,
+                    None => {
+                        context
+                            .components
+                            .by_name("message")
+                            .send(MessageWrapper::Error(format!(
+                                "can't find the message component in home to send messages to"
+                            )));
+                        return;
+                    }
+                };
 
-                api::create_game(player_name.clone(), emitter, key, api_url.as_str());
+                api::create_game(
+                    player_name.clone(),
+                    emitter,
+                    key,
+                    api_url.as_str(),
+                    message_key,
+                );
 
                 state.player_name.set(player_name);
             }
@@ -46,7 +71,7 @@ impl Component for Home {
                 state.api_url.set(new_api_url);
             }
             "nav_back" => {
-                let _coming_from = state.screen_history.pop().unwrap();
+                state.screen_history.pop();
                 let destination = match state.screen_history.pop() {
                     Some(previous) => previous.to_ref().to_string(),
                     None => Screen::Splash.to_string(),

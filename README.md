@@ -93,4 +93,5 @@ Set up some rules for the game. The team gets to choose what options to set. The
 - [x] As a player, I want to see what went wrong when there is an error
 - [x] As a player, I want to easily copy the game code
 - [x] As a player, I would like to quit the game
-- [ ] Remove all unwraps and send error messages to screen
+- [x] Remove all unwraps and send error messages to screen
+- [ ] As a player, I want to join an existing lobby
