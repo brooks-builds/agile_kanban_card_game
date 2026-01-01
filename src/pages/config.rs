@@ -2,9 +2,6 @@ use anathema::{
     component::Component,
     state::{State, Value},
 };
-
-use crate::components::error::ErrorMessage;
-
 pub struct Config;
 
 impl Component for Config {

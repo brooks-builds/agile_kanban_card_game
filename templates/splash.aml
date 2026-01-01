@@ -16,5 +16,5 @@ vstack
 				spacer
 		hstack
 			spacer
-			@button (on_click->create_game) [label: "Create Game"]
+			@button (on_click->create_game) [label: "Create Game", style: "success"]
 			spacer

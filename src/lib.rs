@@ -5,8 +5,9 @@ mod pages;
 use crate::{
     components::{
         button::{Button, ButtonState},
-        error::{ErrorComponent, ErrorState},
+        game_code::{GameCode, GameCodeState},
         input::{Input, InputState},
+        message::{Message, MessageState},
         nav::Nav,
     },
     pages::{
@@ -51,10 +52,16 @@ pub fn run() -> Result<(), Error> {
     builder.component("lobby", "templates/lobby.aml", Lobby, ())?;
     builder.component("config", "templates/config.aml", Config, ConfigState::new())?;
     builder.component(
-        "error",
-        "templates/error.aml",
-        ErrorComponent,
-        ErrorState::new(),
+        "message",
+        "templates/message.aml",
+        Message,
+        MessageState::new(),
+    )?;
+    builder.component(
+        "game_code",
+        "templates/game_code.aml",
+        GameCode,
+        GameCodeState::new(),
     )?;
 
     builder.finish(&mut backend, |runtime, backend| runtime.run(backend))

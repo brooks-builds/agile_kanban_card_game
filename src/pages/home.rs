@@ -1,7 +1,4 @@
-use crate::{
-    api::{self, CreateGameResponse},
-    components::error::ErrorMessage,
-};
+use crate::api::{self, CreateGameResponse};
 use anathema::{
     component::Component,
     state::{List, State, Value},

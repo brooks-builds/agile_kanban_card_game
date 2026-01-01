@@ -10,10 +10,10 @@ vstack
 			text "API URL: "
 			text attributes.api_url
 			text " "
-			@button (on_click->changing_api_url) [size: "small", label: "change"]
+			@button (on_click->changing_api_url) [size: "small", label: "change", style: "success"]
 	spacer
 	if !state.changing_api_url
 		hstack
 			spacer
-			@button (on_click->close) [label: "Close Config"]
+			@button (on_click->close) [label: "Close Config", style: "success"]
 			spacer

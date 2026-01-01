@@ -1,0 +1,3 @@
+hstack
+	text "Game Code: "
+	@button (on_click->copy) [label: attributes.code, size: "small", style: "none"]

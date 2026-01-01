@@ -9,3 +9,4 @@ anathema-extras = "0.1.0"
 reqwest = { version = "0.13.0", features = ["json", "blocking"] }
 serde_json = "1.0.148"
 serde = "1.0.228"
+arboard = "3.6.1"

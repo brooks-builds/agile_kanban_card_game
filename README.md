@@ -91,5 +91,6 @@ Set up some rules for the game. The team gets to choose what options to set. The
   - [x] While editing the API URL the close config button is not visible
   - [x] Can cancel changing API URL on config page
 - [x] As a player, I want to see what went wrong when there is an error
-- [ ] As a player, I want to easily copy the game code
+- [x] As a player, I want to easily copy the game code
 - [ ] As a player, I would like to quit the game
+- [ ] Remove all unwraps and send error messages to screen

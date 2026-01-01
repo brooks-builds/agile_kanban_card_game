@@ -1,0 +1,17 @@
+vstack
+	if state.have_errors
+		border [foreground: "red", sides: ["left", "right", "bottom"]]
+			vstack
+				for message in state.errors
+					hstack
+						spacer
+						text message
+						spacer
+	if state.have_successes
+		border [foreground: "blue", sides: ["left", "right", "bottom"]]
+			vstack
+				for message in state.successes
+					hstack
+						spacer
+						text message
+						spacer
