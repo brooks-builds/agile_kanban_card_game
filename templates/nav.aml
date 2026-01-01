@@ -6,4 +6,5 @@ border [sides: "bottom"]
 			hstack
 				@game_code [code: attributes.game_code]
 		text " "
-		@button (on_click->open_config) [label: "config", size: "small", style: "success"]
+		@button (on_click->open_config) [label: "⚙ ", size: "small"]
+		@button (on_click->exit) [label: "❌", size: "small"]

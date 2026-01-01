@@ -18,6 +18,7 @@ impl Component for Nav {
     ) {
         match event.name() {
             "open_config" => context.publish("nav_to", Screen::Config),
+            "exit" => context.publish("exit", ()),
             _ => (),
         }
     }

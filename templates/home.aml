@@ -1,5 +1,5 @@
 vstack
-	@nav (nav_to->nav_to) [game_code: state.game_code, screen: state.screen]
+	@nav (nav_to->nav_to, exit->exit) [game_code: state.game_code, screen: state.screen]
 	@message
 	if state.screen == "splash"
 		vstack

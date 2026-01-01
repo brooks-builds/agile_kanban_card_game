@@ -20,7 +20,7 @@ impl Component for Home {
         event: &mut anathema::component::UserEvent<'_>,
         state: &mut Self::State,
         mut _children: anathema::component::Children<'_, '_>,
-        context: anathema::component::Context<'_, '_, Self::State>,
+        mut context: anathema::component::Context<'_, '_, Self::State>,
     ) {
         match event.name() {
             "create_game" => {
@@ -53,6 +53,9 @@ impl Component for Home {
                 };
 
                 state.screen.set(destination);
+            }
+            "exit" => {
+                context.stop_runtime();
             }
             _ => (),
         }
