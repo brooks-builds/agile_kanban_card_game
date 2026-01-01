@@ -90,6 +90,6 @@ Set up some rules for the game. The team gets to choose what options to set. The
   - [x] Player returns to where they were before opening config
   - [x] While editing the API URL the close config button is not visible
   - [x] Can cancel changing API URL on config page
-- [ ] As a player, I want to see what went wrong when there is an error
+- [x] As a player, I want to see what went wrong when there is an error
 - [ ] As a player, I want to easily copy the game code
 - [ ] As a player, I would like to quit the game

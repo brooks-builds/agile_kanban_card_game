@@ -1,0 +1,9 @@
+vstack
+	if state.have_messages
+		border [foreground: "red", sides: ["left", "right", "bottom"]]
+			vstack
+				for message in state.messages
+					hstack
+						spacer
+						text message
+						spacer

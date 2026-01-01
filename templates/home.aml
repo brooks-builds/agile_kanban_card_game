@@ -1,5 +1,6 @@
 vstack
 	@nav (nav_to->nav_to) [game_code: state.game_code, screen: state.screen]
+	@error
 	if state.screen == "splash"
 		vstack
 			@splash (create_game->create_game)
