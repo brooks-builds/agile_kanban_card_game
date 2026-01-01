@@ -1,11 +1,9 @@
-use std::fmt::Display;
-
 use crate::api::{self, CreateGameResponse};
 use anathema::{
     component::Component,
-    state::{State, Value},
+    state::{List, State, Value},
 };
-
+use std::fmt::Display;
 pub struct Home;
 
 impl Component for Home {
@@ -27,17 +25,34 @@ impl Component for Home {
         match event.name() {
             "create_game" => {
                 let player_name = event.data::<String>().to_owned();
-
+                let api_url = state.api_url.to_ref();
                 let emitter = context.emitter.clone();
                 let key = context.widget_id;
 
-                api::create_game(player_name.clone(), emitter, key);
+                api::create_game(player_name.clone(), emitter, key, api_url.as_str());
 
                 state.player_name.set(player_name);
             }
             "nav_to" => {
                 let screen_destination = event.data::<Screen>();
-                state.screen.set(screen_destination.to_string());
+                let screen = screen_destination.to_string();
+
+                state.screen.set(screen.clone());
+                state.screen_history.push_back(screen);
+            }
+            "new_api_url" => {
+                let new_api_url = event.data::<String>().to_owned();
+
+                state.api_url.set(new_api_url);
+            }
+            "nav_back" => {
+                let _coming_from = state.screen_history.pop().unwrap();
+                let destination = match state.screen_history.pop() {
+                    Some(previous) => previous.to_ref().to_string(),
+                    None => Screen::Splash.to_string(),
+                };
+
+                state.screen.set(destination);
             }
             _ => (),
         }
@@ -56,10 +71,13 @@ impl Component for Home {
             Screen::Splash => {
                 let game_id = message.game_id;
                 let game_code = message.code;
+                let lobby = Screen::Lobby.to_string();
 
                 state.game_id.set(game_id);
                 state.game_code.set(game_code);
-                *screen = Screen::Lobby.to_string();
+                state.screen_history.push(lobby.clone());
+
+                *screen = lobby;
             }
             Screen::Lobby => (),
             Screen::Config => (),
@@ -74,6 +92,7 @@ pub struct HomeState {
     game_code: Value<i32>,
     screen: Value<String>,
     api_url: Value<String>,
+    screen_history: Value<List<String>>,
 }
 
 impl HomeState {
@@ -83,6 +102,7 @@ impl HomeState {
         let game_code = Value::new(0);
         let screen = Value::new(Screen::Splash.to_string());
         let api_url = Value::new("http://localhost:3000".to_owned());
+        let screen_history = Value::new(List::empty());
 
         Self {
             player_name,
@@ -90,6 +110,7 @@ impl HomeState {
             game_code,
             screen,
             api_url,
+            screen_history,
         }
     }
 }

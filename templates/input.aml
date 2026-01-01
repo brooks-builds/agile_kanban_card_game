@@ -4,4 +4,5 @@ vstack
 		border
 			@ae_input (on_enter->on_enter)
 				text [foreground: "dark_grey"] attributes.placeholder
+		@button (on_click->new_api_cancel) [label: "cancel", size: "small"]
 	text state.value

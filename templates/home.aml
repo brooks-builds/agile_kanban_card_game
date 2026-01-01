@@ -6,4 +6,4 @@ vstack
 	else if state.screen == "lobby"
 		@lobby [game_code: state.game_code, player_name: state.player_name]
 	else if state.screen == "config"
-		@config [api_url: state.api_url]
+		@config (new_api_url->new_api_url, nav_back->nav_back) [api_url: state.api_url]

@@ -5,9 +5,15 @@ vstack
 		spacer
 	hstack
 		if state.changing_api_url
-			@input [label: "API URL", placeholder: "API URL"]
+			@input (on_enter->new_api_url, cancel->new_api_cancel) [label: "API URL", placeholder: "API URL"]
 		else
 			text "API URL: "
 			text attributes.api_url
 			text " "
 			@button (on_click->changing_api_url) [size: "small", label: "change"]
+	spacer
+	if !state.changing_api_url
+		hstack
+			spacer
+			@button (on_click->close) [label: "Close Config"]
+			spacer
