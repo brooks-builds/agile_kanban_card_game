@@ -1,8 +1,11 @@
 vstack
 	vstack [foreground: state.foreground_color]
-		text attributes.label
+		hstack
+			text attributes.label
+			text " (return when done)"
 		border
 			@ae_input (on_enter->on_enter)
 				text [foreground: "dark_grey"] attributes.placeholder
-		@button (on_click->new_api_cancel) [label: "cancel", size: "small", style: "danger"]
+		if attributes.cancel
+			@button (on_click->new_api_cancel) [label: "cancel", size: "small", style: "danger"]
 	text state.value

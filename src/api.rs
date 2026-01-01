@@ -39,6 +39,15 @@ pub fn create_game(
     });
 }
 
+pub fn join_game(
+    game_code: &str,
+    emitter: Emitter,
+    send_to: Key,
+    base_api_url: &str,
+    message_id: Key,
+) {
+}
+
 #[derive(Debug, Serialize)]
 pub struct CreateGameData {
     pub player_name: String,

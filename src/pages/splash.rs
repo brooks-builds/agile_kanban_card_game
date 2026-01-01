@@ -3,6 +3,8 @@ use anathema::{
     state::{State, Value},
 };
 
+use crate::components::message::MessageWrapper;
+
 pub struct Splash;
 
 impl Component for Splash {
@@ -27,6 +29,23 @@ impl Component for Splash {
                 let player_name = state.player_name.to_ref().to_owned();
 
                 context.publish("create_game", player_name.to_owned());
+                event.stop_propagation();
+            }
+            "join_game" => {
+                let game_code = match event.data_checked::<String>() {
+                    Some(code) => code,
+                    None => {
+                        let error_message = "Code missing or not a string".to_owned();
+
+                        context
+                            .components
+                            .by_name("message")
+                            .send(MessageWrapper::Error(error_message));
+
+                        return;
+                    }
+                };
+
                 event.stop_propagation();
             }
             _ => (),

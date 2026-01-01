@@ -16,5 +16,11 @@ vstack
 				spacer
 		hstack
 			spacer
-			@button (on_click->create_game) [label: "Create Game", style: "success"]
+			@button (on_click->create_game) [label: "Create Game", style: "success", size: "small"]
 			spacer
+		padding [top: 1]
+			hstack
+				spacer
+				text "or"
+				spacer
+		@input (on_enter->join_game) [label: "Game Code", cancel: false]

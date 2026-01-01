@@ -43,6 +43,7 @@ impl Component for Input {
                 let value = event.data::<anathema_extras::Text>().deref().to_owned();
 
                 context.publish("on_enter", value);
+                event.stop_propagation();
             }
             _ => (),
         }
