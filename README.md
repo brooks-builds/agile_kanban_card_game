@@ -97,3 +97,5 @@ Set up some rules for the game. The team gets to choose what options to set. The
 - [ ] As a player, I want to join an existing lobby
   - [x] Can see other player names
   - [ ] Don't see our in the other players list
+- [ ] Refactor event system to use global events with the pattern by [Justus_Fluegel](https://play.rust-lang.org/?version=stable&mode=debug&edition=2024&gist=30f1f7538426a4802b018500d348b81c)
+- [ ] Break events out into their own functions for each component to have less indentation

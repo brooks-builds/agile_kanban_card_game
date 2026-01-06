@@ -177,6 +177,7 @@ impl Component for Home {
                         state.game_id.set(game_id);
                         state.game_code.set(game_code);
                         state.screen_history.push(lobby.clone());
+                        state.player_id.set(create_game_response.player_id);
 
                         *screen = lobby;
 
@@ -226,6 +227,7 @@ pub struct HomeState {
     api_url: Value<String>,
     screen_history: Value<List<String>>,
     other_player_names: Value<List<String>>,
+    player_id: Value<String>,
 }
 
 impl HomeState {
@@ -237,6 +239,7 @@ impl HomeState {
         let api_url = Value::new("http://localhost:3000".to_owned());
         let screen_history = Value::new(List::empty());
         let other_player_names = Value::new(List::empty());
+        let player_id = Value::new(String::new());
 
         Self {
             player_name,
@@ -246,6 +249,7 @@ impl HomeState {
             api_url,
             screen_history,
             other_player_names,
+            player_id,
         }
     }
 }

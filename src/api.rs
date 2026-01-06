@@ -89,6 +89,7 @@ pub struct CreateGameResponse {
     pub player_name: String,
     pub game_id: String,
     pub code: i32,
+    pub player_id: String,
 }
 
 #[derive(Debug, Serialize)]

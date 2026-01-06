@@ -3,8 +3,11 @@ vstack
 		hstack
 			text "Joined lobby as "
 			text attributes.player_name
+			text " with id "
+			text attributes.player_id
 	text "Other Players:"
 	padding [left: 4]
 		vstack
 			for name in attributes.other_player_names
 				text name
+

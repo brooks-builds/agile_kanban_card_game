@@ -5,6 +5,6 @@ vstack
 		vstack
 			@splash (create_game->create_game, join_game->join_game)
 	else if state.screen == "lobby"
-		@lobby [game_code: state.game_code, player_name: state.player_name, other_player_names: state.other_player_names]
+		@lobby [game_code: state.game_code, player_name: state.player_name, other_player_names: state.other_player_names, player_id: state.player_id]
 	else if state.screen == "config"
 		@config (new_api_url->new_api_url, nav_back->nav_back) [api_url: state.api_url]
