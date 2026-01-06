@@ -1,9 +1,8 @@
+use crate::components::message::MessageWrapper;
 use anathema::{
     component::Component,
     state::{State, Value},
 };
-
-use crate::components::message::MessageWrapper;
 
 pub struct Splash;
 
@@ -45,7 +44,23 @@ impl Component for Splash {
                         return;
                     }
                 };
+                let code = match game_code.parse::<i32>() {
+                    Ok(code) => code,
+                    Err(error) => {
+                        let message =
+                            MessageWrapper::Error(format!("Code must be a number: {error}"));
 
+                        context.components.by_name("message").send(message);
+                        return;
+                    }
+                };
+                let player_name = state.player_name.to_ref().clone();
+                let game = JoinGameEventData {
+                    game_code: code,
+                    player_name,
+                };
+
+                context.publish("join_game", game);
                 event.stop_propagation();
             }
             _ => (),
@@ -64,4 +79,10 @@ impl SplashState {
 
         Self { player_name }
     }
+}
+
+#[derive(Debug)]
+pub struct JoinGameEventData {
+    pub game_code: i32,
+    pub player_name: String,
 }

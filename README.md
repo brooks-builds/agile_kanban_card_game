@@ -95,3 +95,5 @@ Set up some rules for the game. The team gets to choose what options to set. The
 - [x] As a player, I would like to quit the game
 - [x] Remove all unwraps and send error messages to screen
 - [ ] As a player, I want to join an existing lobby
+  - [x] Can see other player names
+  - [ ] Don't see our in the other players list

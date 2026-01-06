@@ -1,5 +1,10 @@
 vstack
-	text "Players:"
+	padding [bottom: 1]
+		hstack
+			text "Joined lobby as "
+			text attributes.player_name
+	text "Other Players:"
 	padding [left: 4]
 		vstack
-			text attributes.player_name
+			for name in attributes.other_player_names
+				text name

@@ -1,6 +1,7 @@
 use crate::{
-    api::{self, CreateGameResponse},
+    api::{self, CreateGameResponse, LobbyPlayer},
     components::message::MessageWrapper,
+    pages::splash,
 };
 use anathema::{
     component::Component,
@@ -12,7 +13,7 @@ pub struct Home;
 impl Component for Home {
     type State = HomeState;
 
-    type Message = CreateGameResponse;
+    type Message = HomeMessage;
 
     fn accept_focus(&self) -> bool {
         false
@@ -82,6 +83,59 @@ impl Component for Home {
             "exit" => {
                 context.stop_runtime();
             }
+            "join_game" => {
+                event.stop_propagation();
+
+                let Some(game_to_join) = event.data_checked::<splash::JoinGameEventData>() else {
+                    context
+                        .components
+                        .by_name("message")
+                        .send(MessageWrapper::Error(
+                            "don't have game data to create a game".to_owned(),
+                        ));
+
+                    return;
+                };
+                let player_name = &game_to_join.player_name;
+                let emitter = context.emitter;
+                let key = context.widget_id;
+                let base_api_url = state.api_url.to_ref().clone();
+                let message_key = match children
+                    .components()
+                    .by_name("message")
+                    .first(|key, _, _| key)
+                {
+                    Some(key) => key,
+                    None => {
+                        context
+                            .components
+                            .by_name("message")
+                            .send(MessageWrapper::Error(format!(
+                                "can't find the message component in home to send messages to"
+                            )));
+                        return;
+                    }
+                };
+
+                state.player_name.set(player_name.clone());
+
+                api::join_game(
+                    game_to_join.game_code,
+                    game_to_join.player_name.clone(),
+                    emitter.clone(),
+                    key,
+                    &base_api_url,
+                    message_key,
+                );
+
+                api::get_players_in_lobby(
+                    &base_api_url,
+                    game_to_join.game_code,
+                    emitter.clone(),
+                    message_key,
+                    context.widget_id,
+                );
+            }
             _ => (),
         }
     }
@@ -90,25 +144,75 @@ impl Component for Home {
         &mut self,
         message: Self::Message,
         state: &mut Self::State,
-        mut _children: anathema::component::Children<'_, '_>,
-        mut _context: anathema::component::Context<'_, '_, Self::State>,
+        mut children: anathema::component::Children<'_, '_>,
+        mut context: anathema::component::Context<'_, '_, Self::State>,
     ) {
-        let mut screen = state.screen.to_mut();
+        match message {
+            HomeMessage::GameCreated(create_game_response) => {
+                let mut screen = state.screen.to_mut();
 
-        match Screen::from(screen.as_str()) {
-            Screen::Splash => {
-                let game_id = message.game_id;
-                let game_code = message.code;
-                let lobby = Screen::Lobby.to_string();
+                match Screen::from(screen.as_str()) {
+                    Screen::Splash => {
+                        let game_id = create_game_response.game_id;
+                        let game_code = create_game_response.code;
+                        let lobby = Screen::Lobby.to_string();
+                        let api_url = state.api_url.to_ref();
+                        let message_key = match children
+                            .components()
+                            .by_name("message")
+                            .first(|key, _, _| key)
+                        {
+                            Some(key) => key,
+                            None => {
+                                context
+                                    .components
+                                    .by_name("message")
+                                    .send(MessageWrapper::Error(format!(
+                                        "can't find the message component in home to send messages to"
+                                    )));
+                                return;
+                            }
+                        };
 
-                state.game_id.set(game_id);
-                state.game_code.set(game_code);
-                state.screen_history.push(lobby.clone());
+                        state.game_id.set(game_id);
+                        state.game_code.set(game_code);
+                        state.screen_history.push(lobby.clone());
 
-                *screen = lobby;
+                        *screen = lobby;
+
+                        api::get_players_in_lobby(
+                            api_url.as_str(),
+                            game_code,
+                            context.emitter.clone(),
+                            message_key,
+                            context.widget_id,
+                        );
+                    }
+                    Screen::Lobby => (),
+                    Screen::Config => (),
+                }
             }
-            Screen::Lobby => (),
-            Screen::Config => (),
+            HomeMessage::GameJoined { game_code } => {
+                let mut current_screen = state.screen.to_mut();
+
+                state.game_code.set(game_code);
+
+                match Screen::from(current_screen.as_str()) {
+                    Screen::Splash => {
+                        let lobby_screen = Screen::Lobby.to_string();
+
+                        *current_screen = lobby_screen;
+                    }
+                    Screen::Lobby => todo!(),
+                    Screen::Config => todo!(),
+                }
+            }
+            HomeMessage::LobbyPlayerUpdated(lobby_players) => {
+                let list =
+                    List::from_iter(lobby_players.into_iter().map(|player| player.player_name));
+
+                state.other_player_names.set(list);
+            }
         }
     }
 }
@@ -121,6 +225,7 @@ pub struct HomeState {
     screen: Value<String>,
     api_url: Value<String>,
     screen_history: Value<List<String>>,
+    other_player_names: Value<List<String>>,
 }
 
 impl HomeState {
@@ -131,6 +236,7 @@ impl HomeState {
         let screen = Value::new(Screen::Splash.to_string());
         let api_url = Value::new("http://localhost:3000".to_owned());
         let screen_history = Value::new(List::empty());
+        let other_player_names = Value::new(List::empty());
 
         Self {
             player_name,
@@ -139,6 +245,7 @@ impl HomeState {
             screen,
             api_url,
             screen_history,
+            other_player_names,
         }
     }
 }
@@ -171,4 +278,10 @@ impl From<&str> for Screen {
             _ => Self::Splash,
         }
     }
+}
+
+pub enum HomeMessage {
+    GameCreated(CreateGameResponse),
+    GameJoined { game_code: i32 },
+    LobbyPlayerUpdated(Vec<LobbyPlayer>),
 }
